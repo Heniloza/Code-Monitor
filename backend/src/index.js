@@ -2,6 +2,9 @@ import express from "express"
 import dotenv from "dotenv"
 dotenv.config();
 import connectDB from "./config/dbConnection.js";
+import passport from "passport";
+import cookieParser from "cookie-parser"
+import authRoutes from "./routes/authRoutes.js"
 
 const app = express();
 const PORT = process.env.PORT || 5000
@@ -11,6 +14,19 @@ const PORT = process.env.PORT || 5000
 connectDB(process.env.MONGO_URI)
   .then(() => console.log("CONNECTED TO DATABASE"))
   .catch((err) => console.log("Error in connection database", err));
+
+
+//Middlewares
+app.use(passport.initialize());
+app.use(express.json())
+app.use(cors({
+  origin:"http://localhost:5173",
+  credential:true
+}))
+app.use(cookieParser())
+
+//Routes
+app.use("/api/auth",authRoutes)
 
 app.listen(PORT,()=>console.log(`SERVER STARTED AT PORT : ${PORT}`)
 )
