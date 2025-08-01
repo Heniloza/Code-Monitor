@@ -5,6 +5,8 @@ import connectDB from "./config/dbConnection.js";
 import passport from "passport";
 import cookieParser from "cookie-parser"
 import authRoutes from "./routes/authRoutes.js"
+import cors from "cors"
+import "./config/passport.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000

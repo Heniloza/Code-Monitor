@@ -8,12 +8,12 @@ const userSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      required: false,
+      required: true,
       unique: true,
     },
     password: {
       type: String,
-      required: true,
+      required: false,
       minlength:[6,"Password must be at least 6 character"]
     },
     isVerified:{
@@ -33,3 +33,5 @@ const userSchema = new mongoose.Schema(
 );
 
 const USER = mongoose.model("Use",userSchema)
+
+export default USER
