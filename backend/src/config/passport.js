@@ -3,6 +3,7 @@ import {Strategy as googleStrategy} from "passport-google-oauth20"
 import {Strategy as githubStrategy} from "passport-github"
 import USER from "../models/User.model.js"
 import {config} from "dotenv"
+import axios from "axios"
 
 config();
 
@@ -14,8 +15,12 @@ passport.use(
       callbackURL: "http://localhost:5000/api/auth/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
+      ;
+      
       try {
         const user = await USER.findOne({ email: profile.emails[0].value });
+
+        
 
         if (!user) {
           const newUser = await USER.create({
@@ -44,35 +49,49 @@ passport.use(
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_SECRET_ID,
       callbackURL: "http://localhost:5000/api/auth/github/callback",
-      scope: ["user:email"],
     },
     async (accessToken, refreshToken, profile, done) => {
-      console.log(profile, "Github profile");
+      console.log(profile, "Profile data");
       try {
-        const email =
-          profile.emails && profile.emails.length > 0
-            ? profile.emails[0].value
-            : null;
+        
+        const { data: emails } = await axios.get(
+          "https://api.github.com/user/emails",
+          {
+            headers: {
+              Authorization: `token ${accessToken}`,
+              "User-Agent": "Node.js",
+            },
+          }
+        );
 
-        if (!email)
-          return done(null, false, { message: "no email from githubs" });
+        const primaryEmailObj = emails.find(
+          (email) => email.primary && email.verified
+        );
+        const email = primaryEmailObj?.email || emails[0]?.email;
+            console.log(email);
 
-        const user = await USER.findOne({ email: email });
+        if (!email) {
+          console.log(" No email returned from GitHub API");
+          return done(null, false, { message: "No email from GitHub" });
+        }
+
+       
+        let user = await USER.findOne({ email });
 
         if (!user) {
-          const newUser = await USER.create({
+          user = await USER.create({
             name: profile.displayName || profile.username,
             email,
             provider: "github",
             password: undefined,
             isVerified: true,
-            profileImage: profile.photos[0]?.value,
+            profileImage: profile.photos?.[0]?.value,
           });
-          return done(null, newUser);
         }
 
         return done(null, user);
       } catch (error) {
+        console.error("GitHub Strategy Error:", error);
         return done(error);
       }
     }
