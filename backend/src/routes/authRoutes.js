@@ -1,8 +1,17 @@
 import express from "express"
 import passport from "passport";
 import generateToken from "../utils/generateToken.js";
+import { checkAuth, loginController, logoutController, signupController, updateProfileController } from "../controllers/authController.js";
+import { authMiddleware } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
+
+router.post("/login",loginController)
+router.post("/signup",signupController)
+router.post("/logout",logoutController)
+router.post("/update-profile",authMiddleware,updateProfileController)
+router.get("/check-auth",authMiddleware,checkAuth)
+
 
 
 router.get("/google",passport.authenticate("google",{scope:["profile","email"]}))
