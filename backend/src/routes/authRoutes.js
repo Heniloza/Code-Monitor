@@ -3,19 +3,23 @@ import passport from "passport";
 import generateToken from "../utils/generateToken.js";
 import { checkAuth, loginController, logoutController, signupController, updateProfileController } from "../controllers/authController.js";
 import { authMiddleware } from "../middleware/authMiddleware.js";
+import { generateOtpController, verifyOtpController } from "../controllers/otpController.js";
 
 const router = express.Router();
 
+//auth routes 
 router.post("/login",loginController)
 router.post("/signup",signupController)
 router.post("/logout",logoutController)
 router.post("/update-profile",authMiddleware,updateProfileController)
 router.get("/check-auth",authMiddleware,checkAuth)
 
+//Otp generate and verify  routes
+router.post("/generate",generateOtpController)
+router.post("/verify", verifyOtpController);
 
-
+//OAuth routes 
 router.get("/google",passport.authenticate("google",{scope:["profile","email"]}))
-
 router.get("/google/callback",
     passport.authenticate("google",{session:false,failureRedirect:"/login"}),
     (req,res)=>{
@@ -35,7 +39,6 @@ router.get(
   "/github",
   passport.authenticate("github", { scope: ["user:email"] })
 );
-
 router.get(
   "/github/callback",
   passport.authenticate("github", {
