@@ -23,7 +23,7 @@ export const signupController = async(req,res)=>{
         const existingUser = await USER.findOne({email})
 
         if(existingUser){
-            res.status(400).json({
+            return res.status(400).json({
                 message: "Email already in use"
             })
         }
@@ -33,7 +33,9 @@ export const signupController = async(req,res)=>{
         const newUser = await USER.create({
             name,
             email,
-            password:hashedPassword
+            password:hashedPassword,
+            isFirstLogin:false,
+            isVerified:true,
         })
 
         res.status(201).json({
@@ -140,3 +142,37 @@ export const checkAuth = async (req, res) => {
     console.log(error.message,"Internal server error");
   }
 };
+
+export const platformHandleController = async (req,res)=>{
+    try {
+        const userId = req.user._id
+        const {leetcode,codeforce,github} = req.body
+
+        const updatedUser = await USER.findByIdAndUpdate(
+          userId,
+          {
+            $set: {
+              "platformHandles.leetcode": leetcode,
+              "platformHandles.codeforces": codeforce,
+              "platformHandles.github": github,
+            },
+          },
+          { new: true }
+        );
+
+        if (!updatedUser) {
+          return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json({
+          message: "Platform handles updated successfully",
+          platformHandles: updatedUser.platformHandles,
+        });
+
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({
+            message:"Error in platform handles data"
+        })
+    }
+}

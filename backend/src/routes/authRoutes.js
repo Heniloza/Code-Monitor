@@ -1,7 +1,7 @@
 import express from "express"
 import passport from "passport";
 import generateToken from "../utils/generateToken.js";
-import { checkAuth, loginController, logoutController, signupController, updateProfileController } from "../controllers/authController.js";
+import { checkAuth, loginController, logoutController, platformHandleController, signupController, updateProfileController } from "../controllers/authController.js";
 import { authMiddleware } from "../middleware/authMiddleware.js";
 import { generateOtpController, verifyOtpController } from "../controllers/otpController.js";
 
@@ -17,6 +17,9 @@ router.get("/check-auth",authMiddleware,checkAuth)
 //Otp generate and verify  routes
 router.post("/generate",generateOtpController)
 router.post("/verify", verifyOtpController);
+
+//Platform handles route
+router.patch("/platform-handles",authMiddleware,platformHandleController)
 
 //OAuth routes 
 router.get("/google",passport.authenticate("google",{scope:["profile","email"]}))

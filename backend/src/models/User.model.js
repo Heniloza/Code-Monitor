@@ -14,24 +14,33 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: false,
-      minlength:[6,"Password must be at least 6 character"]
+      minlength: [6, "Password must be at least 6 character"],
     },
-    isVerified:{
-        type:Boolean,
-        default:false
+    isFirstLogin: {
+      type: Boolean,
+      default: true,
     },
-    profileImage:{
-        type:String
+    isVerified: {
+      type: Boolean,
+      default: false,
     },
-    provider:{
-        type:String,
-        enum:["email","google","github"],
-        default:"email"
-    }
+    profileImage: {
+      type: String,
+    },
+    platformHandles: {
+      leetcode: { type: String, trim: true },
+      codeforce: { type: String, trim: true },
+      github: { type: String, trim: true },
+    },
+    provider: {
+      type: String,
+      enum: ["email", "google", "github"],
+      default: "email",
+    },
   },
   { timestamps: true }
 );
 
-const USER = mongoose.model("User",userSchema)
+const USER = mongoose.model("Users",userSchema)
 
 export default USER

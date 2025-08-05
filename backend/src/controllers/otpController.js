@@ -83,7 +83,9 @@ export const verifyOtpController = async(req,res)=>{
                 message:"User not found"
             })
         }
-
+        user.isVerified = true;
+        user.isFirstLogin = false;
+        await user.save()
         const token = generateToken(user)        
 
         const cookieOptions = {

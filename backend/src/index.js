@@ -19,13 +19,18 @@ connectDB(process.env.MONGO_URI)
 
 
 //Middlewares
-app.use(passport.initialize());
 app.use(express.json())
-app.use(cors({
-  origin:"http://localhost:5173",
-  credential:true
-}))
-app.use(cookieParser())
+app.use(express.urlencoded({ extended: true }));
+app.use(passport.initialize());
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:5173", 
+    credentials: true, 
+  })
+);
+
+
 
 //Routes
 app.use("/api/auth",authRoutes)
