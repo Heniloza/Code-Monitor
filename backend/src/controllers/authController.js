@@ -1,6 +1,7 @@
 import USER from "../models/User.model.js"
 import bcrypt from "bcryptjs"
 import cloudinary from "../utils/cloudinary.js"
+import { generateOtp } from "./otpController.js"
 
 
 
@@ -74,11 +75,12 @@ export const loginController = async(req,res)=>{
             message:"Invalid credentials"
         })
 
+        await generateOtp(user?._id);
+
         res.status(200).json({
             user,
             message:"User logged in successfully"
         })
-
     } catch (error) {
         console.log(error.message);
         res.status(500).json({

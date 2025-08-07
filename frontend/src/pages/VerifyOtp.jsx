@@ -2,7 +2,7 @@ import React from 'react'
 
 function VerifyOtp() {
   return (
-    <div>
+    <div className='h-screen w-screen'>
       
     </div>
   )

@@ -3,47 +3,21 @@ import USER from "../models/User.model.js"
 import generateToken from "../utils/generateToken.js";
 import sendOtp from "../utils/sendOtp.js";
 
-export const generateOtpController = async(req,res)=>{
-    try {
-        const {userId} = req.body;
+export const generateOtp = async (userId) => {
+  const user = await USER.findById(userId);
+  if (!user) throw new Error("User not found");
 
-        if(!userId){
-            return res.status(400).json({
-                message:"UserId is required"
-            })
-        }
+  await OTP.deleteMany({ userId });
 
-        const user = await USER.findById(userId)
-        if(!user){
-            return res.status(404).json({
-              message: "User not found or email mismatch",
-            });
-        }
+  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
 
-        await OTP.deleteMany({ userId });
+  await OTP.create({ userId, otp, expiresAt });
 
-       const otp = Math.floor(100000 + Math.random() * 900000).toString();
-       const expiresAt = new Date(Date.now() + 5 * 60 * 1000); 
+  await sendOtp(user.email, otp);
 
-        await OTP.create({
-          userId,
-          otp,
-          expiresAt,
-        });
-
-        await sendOtp(user?.email,otp)
-
-        res.status(200).json({
-            message:"Otp sended successfully."
-        })
-
-    } catch (error) {
-        console.log(error.message,"Error in generating message");
-        res.status(500).json({
-            message:"Enable to generate otp"
-        })
-    }
-}
+  return otp;
+};
 
 export const verifyOtpController = async(req,res)=>{
     try {
