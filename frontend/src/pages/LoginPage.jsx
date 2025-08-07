@@ -14,11 +14,11 @@ function LoginPage() {
     const navigate = useNavigate();
 
     const handleGoogleAuth=()=>{
-      
+      window.location.href = "http://localhost:5000/api/auth/google";
     }
 
     const handleGithubAuth=()=>{
-   
+      window.location.href = "http://localhost:5000/api/auth/github";
     }
 
     const handleSubmit=(e)=>{
@@ -37,7 +37,7 @@ function LoginPage() {
         </div>
         <form
           onSubmit={handleSubmit}
-          className="h-[80%] w-full md:w-[70%] md:shadow-2xl rounded-2xl flex items-center flex-col gap-8 justify-center"
+          className="h-[60%] md:h-[70%] w-full  md:w-[70%] rounded-2xl flex items-center flex-col gap-8 justify-center"
         >
           <h1 className="mt-4 text-md  md:text-2xl font-bold">
             Login to your accouunt
@@ -74,20 +74,10 @@ function LoginPage() {
             className="border w-[70%] py-2 rounded-md font-bold text-2xl mt-2 bg-purple-400 text-white hover:bg-purple-300 hover:scale-95 delay-150 transition-all"
             disabled={isLoggingin}
           >
-           {isLoggingin?"Loading..." : "Login"}
+            {isLoggingin ? "Loading..." : "Login"}
           </button>
           <h1 className="font-bold">OR</h1>
-          <div className="flex flex-col sm:flex-row gap-4 ">
-            <button className="flex items-center justify-center gap-2 border px-4 py-2 rounded-md w-full sm:w-auto hover:bg-gray-100 transition" onClick={handleGoogleAuth}>
-              <FcGoogle className="text-xl" />
-              <span className="text-sm font-medium">Continue with Google</span>
-            </button>
 
-            <button className="flex items-center justify-center gap-2 border px-4 py-2 rounded-md w-full sm:w-auto hover:bg-gray-100 transition" onClick={handleGithubAuth}>
-              <Github className="text-xl" />
-              <span className="text-sm font-medium">Continue with GitHub</span>
-            </button>
-          </div>
           <div className="flex md:hidden gap-2 ">
             <h2>Don't have an account? </h2>
             <Link to={"/signup"}>
@@ -95,6 +85,23 @@ function LoginPage() {
             </Link>
           </div>
         </form>
+        <div className="flex flex-col sm:flex-row gap-4 mb-16">
+          <button
+            className="flex items-center justify-center gap-2 border px-4 py-2 rounded-md w-full sm:w-auto hover:bg-gray-100 transition"
+            onClick={handleGoogleAuth}
+          >
+            <FcGoogle className="text-xl" />
+            <span className="text-sm font-medium">Continue with Google</span>
+          </button>
+
+          <button
+            className="flex items-center justify-center gap-2 border px-4 py-2 rounded-md w-full sm:w-auto hover:bg-gray-100 transition"
+            onClick={handleGithubAuth}
+          >
+            <Github className="text-xl" />
+            <span className="text-sm font-medium">Continue with GitHub</span>
+          </button>
+        </div>
       </div>
 
       {/* {Right side} */}
