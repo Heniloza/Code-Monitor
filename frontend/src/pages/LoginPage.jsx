@@ -9,8 +9,17 @@ function LoginPage() {
         email:"",
         password:"",
     })
-    const { user, login, isLoggingin, isLoggedin } = useAuthStore();
+    const { user, login, isLoggingin, isLoggedin,  } =
+      useAuthStore();
     const navigate = useNavigate();
+
+    const handleGoogleAuth=()=>{
+      
+    }
+
+    const handleGithubAuth=()=>{
+   
+    }
 
     const handleSubmit=(e)=>{
       e.preventDefault()
@@ -69,12 +78,12 @@ function LoginPage() {
           </button>
           <h1 className="font-bold">OR</h1>
           <div className="flex flex-col sm:flex-row gap-4 ">
-            <button className="flex items-center justify-center gap-2 border px-4 py-2 rounded-md w-full sm:w-auto hover:bg-gray-100 transition">
+            <button className="flex items-center justify-center gap-2 border px-4 py-2 rounded-md w-full sm:w-auto hover:bg-gray-100 transition" onClick={handleGoogleAuth}>
               <FcGoogle className="text-xl" />
               <span className="text-sm font-medium">Continue with Google</span>
             </button>
 
-            <button className="flex items-center justify-center gap-2 border px-4 py-2 rounded-md w-full sm:w-auto hover:bg-gray-100 transition">
+            <button className="flex items-center justify-center gap-2 border px-4 py-2 rounded-md w-full sm:w-auto hover:bg-gray-100 transition" onClick={handleGithubAuth}>
               <Github className="text-xl" />
               <span className="text-sm font-medium">Continue with GitHub</span>
             </button>

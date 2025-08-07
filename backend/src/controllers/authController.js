@@ -1,5 +1,5 @@
 import USER from "../models/User.model.js"
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 import cloudinary from "../utils/cloudinary.js"
 
 
