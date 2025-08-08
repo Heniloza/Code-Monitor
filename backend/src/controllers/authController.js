@@ -84,7 +84,7 @@ export const loginController = async(req,res)=>{
     } catch (error) {
         console.log(error.message);
         res.status(500).json({
-            message:"Error in loggin in user"
+            message:"Error in logging in user"
         })
     }
 }
@@ -96,7 +96,7 @@ export const logoutController = async (req, res) => {
   } catch (error) {
     console.log(error.message);
     res.status(500).json({
-      message: "Error in loggin in user",
+      message: "Error in logging in user",
     });
   }
 };
@@ -125,7 +125,7 @@ export const updateProfileController = async (req, res) => {
   } catch (error) {
     console.log(error.message);
     res.status(500).json({
-      message: "Error in loggin in user",
+      message: "Error in logging in user",
     });
   }
 };

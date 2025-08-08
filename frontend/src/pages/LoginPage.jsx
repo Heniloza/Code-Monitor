@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {Link, useNavigate} from "react-router-dom"
-import {Github} from "lucide-react"
+import {Github, Loader} from "lucide-react"
 import { FcGoogle } from "react-icons/fc";
 import { useAuthStore } from '../store/authStore.js';
 
@@ -37,7 +37,7 @@ function LoginPage() {
         </div>
         <form
           onSubmit={handleSubmit}
-          className="h-[60%] md:h-[70%] w-full  md:w-[70%] rounded-2xl flex items-center flex-col gap-8 justify-center"
+          className="h-[80%] md:h-[70%] w-full  md:w-[70%] rounded-2xl flex items-center flex-col gap-8 justify-center"
         >
           <h1 className="mt-4 text-md  md:text-2xl font-bold">
             Login to your accouunt
@@ -74,7 +74,7 @@ function LoginPage() {
             className="border w-[70%] py-2 rounded-md font-bold text-2xl mt-2 bg-purple-400 text-white hover:bg-purple-300 hover:scale-95 delay-150 transition-all"
             disabled={isLoggingin}
           >
-            {isLoggingin ? "Loading..." : "Login"}
+            {isLoggingin ? <div className='flex gap-5 justify-center items-center'><Loader className='animate-spin'/> <p>Loading...</p></div> : "Login"}
           </button>
           <h1 className="font-bold">OR</h1>
 
@@ -85,7 +85,9 @@ function LoginPage() {
             </Link>
           </div>
         </form>
-        <div className="flex flex-col sm:flex-row gap-4 mb-16">
+
+        {/* {Oauth} */}
+        <div className="flex flex-col sm:flex-row gap-4 mb-24">
           <button
             className="flex items-center justify-center gap-2 border px-4 py-2 rounded-md w-full sm:w-auto hover:bg-gray-100 transition"
             onClick={handleGoogleAuth}
