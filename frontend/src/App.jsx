@@ -21,7 +21,7 @@ function App() {
   if(isCheckikngAuth && !user){
     return (
       <div className="flex h-screen items-center justify-center">
-        <Loader2 className="animate-spin size-20"/>
+        <Loader className="animate-spin size-20"/>
       </div>
     )
   }

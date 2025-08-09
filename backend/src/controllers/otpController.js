@@ -58,7 +58,6 @@ export const verifyOtpController = async(req,res)=>{
             })
         }
         user.isVerified = true;
-        user.isFirstLogin = false;
         await user.save()
         const token = generateToken(user)        
 

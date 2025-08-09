@@ -29,6 +29,7 @@ passport.use(
             provider: "google",
             password: undefined,
             isVerified: true,
+            isFirstLogin:false,
             profileImage: profile.photos[0].value,
           });
           return done(null,newUser)
@@ -85,6 +86,7 @@ passport.use(
             provider: "github",
             password: undefined,
             isVerified: true,
+            isFirstLogin: false,
             profileImage: profile.photos?.[0]?.value,
           });
         }

@@ -157,6 +157,7 @@ export const platformHandleController = async (req,res)=>{
               "platformHandles.leetcode": leetcode,
               "platformHandles.codeforces": codeforce,
               "platformHandles.github": github,
+              isFirstLogin: false,
             },
           },
           { new: true }
@@ -168,7 +169,7 @@ export const platformHandleController = async (req,res)=>{
 
         res.status(200).json({
           message: "Platform handles updated successfully",
-          platformHandles: updatedUser.platformHandles,
+          user: updatedUser,
         });
 
     } catch (error) {
