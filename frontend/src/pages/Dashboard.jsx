@@ -11,8 +11,10 @@ function Dashboard() {
     <div>
       {user?.isFirstLogin ? (
         <div className="flex h-screen w-screen justify-center items-center flex-col gap-8">
-          <div className='flex flex-col gap-4 justify-center items-center mt-16'>
-            <p className='font-bold text-md  md:text-2xl'>You haven't connect your account yet.</p>
+          <div className="flex flex-col gap-4 justify-center items-center mt-16">
+            <p className="font-bold text-md  md:text-2xl">
+              You haven't connect your account yet.
+            </p>
             <p>Please connect your account to continue.</p>
           </div>
           <button
@@ -27,8 +29,11 @@ function Dashboard() {
             className="h-120 w-120"
           />
         </div>
-      ):(
-        <div></div>
+      ) : (
+        <div>
+          
+          <h1>Dashboard page</h1>
+        </div>
       )}
       {openConnectionDialog && (
         <ConnectAccount setOpenConnectionDialog={setOpenConnectionDialog} />

@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound"
 import { Loader2 } from "lucide-react"
 import AuthSuccess from "./pages/AuthSuccess"
 import Dashboard from "./pages/Dashboard"
+import MainLayout from "./MainLayout"
 
 function App() {
   const checkAuth = useAuthStore(state=>state.checkAuth)
@@ -30,14 +31,40 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="*" element={<NotFound />}/>
+          <Route path="*" element={<NotFound />} />
           {/* {auth routes} */}
-          <Route path="/login" element={!isAuthenticated? <LoginPage />:<Navigate to={"/"}/>} />
-          <Route path="/signup" element={!isAuthenticated ? <SignupPage />:<Navigate to={"/"}/>} />
-          <Route path="/verify" element={!isAuthenticated && isLoggedin ? <VerifyOtp />:<Navigate to="/"/>} />
-          <Route path="/auth/success" element={<AuthSuccess / >}/>
+          <Route
+            path="/login"
+            element={!isAuthenticated ? <LoginPage /> : <Navigate to={"/"} />}
+          />
+          <Route
+            path="/signup"
+            element={!isAuthenticated ? <SignupPage /> : <Navigate to={"/"} />}
+          />
+          <Route
+            path="/verify"
+            element={
+              !isAuthenticated && isLoggedin ? (
+                <VerifyOtp />
+              ) : (
+                <Navigate to="/" />
+              )
+            }
+          />
+          <Route path="/auth/success" element={<AuthSuccess />} />
 
-          <Route path="/" element={isAuthenticated? <Dashboard /> : <Navigate to="/login"/>}/>
+          <Route
+            path="/"
+            element={
+              isAuthenticated ? (
+                <MainLayout>
+                  <Dashboard />
+                </MainLayout>
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
         </Routes>
       </BrowserRouter>
       <Toaster />
