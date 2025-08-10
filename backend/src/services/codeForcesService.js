@@ -13,7 +13,7 @@ function getCached(key){
     return entry.value
 }
 
-function setcached(key,value,ttlms = 5 * 60 * 1000){
+function setCached(key,value,ttlms = 5 * 60 * 1000){
     cache.set(key,{value,expire:Date.now()+ttlms})
 }
 
@@ -22,13 +22,13 @@ export  const fetchCodeforcesStats = async (handle, opts = {}) => {
   const { useCache = true, submissionsCount = 50 } = opts;
   if (!handle) throw new Error("Codeforces handle is required");
 
-  const cachekey = `cf:${handle}`;
+  const cacheKey = `cf:${handle}`;
   if (useCache) {
-    const cached = getCached(cachekey);
+    const cached = getCached(cacheKey);
     if (cached) return cached;
   }
 
-  const [infoStats, statusStats] = await Promise.all([
+  const [infoRes, statusRes] = await Promise.all([
     axios.get(`${CF_BASEURL}/user.info`,{params:{handles:handle}}),
     axios.get(`${CF_BASEURL}/user.status`,{params:{handle,count:submissionsCount}})
   ]);
