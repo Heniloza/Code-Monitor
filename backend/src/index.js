@@ -5,6 +5,7 @@ import connectDB from "./config/dbConnection.js";
 import passport from "passport";
 import cookieParser from "cookie-parser"
 import authRoutes from "./routes/authRoutes.js"
+import platformRoutes from "./routes/platformRoutes.js"
 import cors from "cors"
 import "./config/passport.js";
 
@@ -34,6 +35,7 @@ app.use(
 
 //Routes
 app.use("/api/auth",authRoutes)
+app.use("/api/platform",platformRoutes)
 
 app.listen(PORT,()=>console.log(`SERVER STARTED AT PORT : ${PORT}`)
 )
