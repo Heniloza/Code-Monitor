@@ -10,6 +10,11 @@ import { Loader2 } from "lucide-react"
 import AuthSuccess from "./pages/AuthSuccess"
 import Dashboard from "./pages/Dashboard"
 import MainLayout from "./MainLayout"
+import Gamification from "./pages/Gamification"
+import RivalMode from "./pages/RivalMode"
+import Settings from "./pages/Settings"
+import XpLevels from "./pages/XpLevels"
+import Streaks from "./pages/Streaks"
 
 function App() {
   const checkAuth = useAuthStore(state=>state.checkAuth)
@@ -65,6 +70,72 @@ function App() {
               )
             }
           />
+
+          <Route
+            path="/gamification"
+            element={
+              isAuthenticated ? (
+                <MainLayout>
+                  <Gamification />
+                </MainLayout>
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
+
+          <Route
+            path="/rival"
+            element={
+              isAuthenticated ? (
+                <MainLayout>
+                  <RivalMode />
+                </MainLayout>
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
+
+          <Route
+            path="/streaks"
+            element={
+              isAuthenticated ? (
+                <MainLayout>
+                  <Streaks />
+                </MainLayout>
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
+
+          <Route
+            path="/xp"
+            element={
+              isAuthenticated ? (
+                <MainLayout>
+                  <XpLevels />
+                </MainLayout>
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
+
+          <Route
+            path="/settings"
+            element={
+              isAuthenticated ? (
+                <MainLayout>
+                  <Settings />
+                </MainLayout>
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
+
         </Routes>
       </BrowserRouter>
       <Toaster />
