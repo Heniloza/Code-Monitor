@@ -100,7 +100,7 @@ export const getAllStats = async(req,res)=>{
               { upsert: true, new: true }
             );
 
-             await StatsHistory.create({
+             await STATSHISTORY.create({
                userId: req.user._id,
                stats,
              });
