@@ -3,6 +3,9 @@ import {useAuthStore} from "../store/authStore.js"
 import ConnectAccount from '../components/ConnectAccount.jsx';
 
 function Dashboard() {
+
+    
+
   const [openConnectionDialog, setOpenConnectionDialog] = useState(false)
   const {user} = useAuthStore()
   console.log(user);
@@ -30,8 +33,8 @@ function Dashboard() {
           />
         </div>
       ) : (
-        <div>
-          <h1>Dashboard page</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+         <h1>Dashboard</h1>
         </div>
       )}
       {openConnectionDialog && (

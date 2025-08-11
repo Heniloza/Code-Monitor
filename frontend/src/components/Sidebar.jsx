@@ -20,7 +20,7 @@ function Sidebar() {
   return (
     <div
       className={`h-full w-[80px] md:w-[250px] shadow-2xl transition-[width]  duration-300 ease-in-out flex flex-col gap-4 md:gap-8 ${
-        openSidebar ? "w-[250px] " : ""
+        openSidebar ? "w-[250px] backdrop-blur-sm z-50 fixed inset-0  " : ""
       }`}
     >
       <NavLink className="flex gap-4 mt-4 md:mt-8 px-4 justify-center" to="/">
