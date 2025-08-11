@@ -15,6 +15,7 @@ import RivalMode from "./pages/RivalMode"
 import Settings from "./pages/Settings"
 import XpLevels from "./pages/XpLevels"
 import Streaks from "./pages/Streaks"
+import ProfilePage from "./pages/ProfilePage"
 
 function App() {
   const checkAuth = useAuthStore(state=>state.checkAuth)
@@ -136,6 +137,18 @@ function App() {
             }
           />
 
+          <Route
+            path="/profile"
+            element={
+              isAuthenticated ? (
+                <MainLayout>
+                  <ProfilePage />
+                </MainLayout>
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
         </Routes>
       </BrowserRouter>
       <Toaster />
