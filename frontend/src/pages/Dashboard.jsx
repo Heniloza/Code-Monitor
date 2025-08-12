@@ -2,13 +2,17 @@ import React, { useEffect, useState } from 'react'
 import {useAuthStore} from "../store/authStore.js"
 import ConnectAccount from '../components/ConnectAccount.jsx';
 import { usePlatformStatsStore } from '../store/platformStatsStore.js';
+import {Link} from "react-router-dom"
 
 function Dashboard() {
   const [openConnectionDialog, setOpenConnectionDialog] = useState(false)
   const {user} = useAuthStore()
-  const { allPlatformStats, fetchAllStats } = usePlatformStatsStore();
-
+  const { allPlatformStats, fetchAllStats } = usePlatformStatsStore()
   console.log(allPlatformStats);
+  const progressPercentage = Math.min(
+  Math.round((allPlatformStats?.leetcode?.totalSolved / 3637) * 100),
+  100
+  );
 
    useEffect(() => {
      if (user?.platformHandles) {
@@ -39,10 +43,9 @@ function Dashboard() {
           />
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mx-6">
           {/* LeetCode Card */}
-          <div className="bg-white shadow rounded-lg p-4">
+          <div className="bg-cyan-100 shadow rounded-lg p-4">
             <p className="text-gray-500">LeetCode Problems Solved</p>
             <div className="flex items-center gap-3 mt-2">
               <img
@@ -60,12 +63,29 @@ function Dashboard() {
                 <p className="text-sm text-gray-600">
                   Ranking: #{allPlatformStats?.leetcode?.ranking ?? "N/A"}
                 </p>
+                <div>
+                  <p className="text-sm text-gray-600">
+                    Easy Problems : {allPlatformStats?.leetcode?.easySolved}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Medium Problems : {allPlatformStats?.leetcode?.mediumSolved}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Hard Problems : {allPlatformStats?.leetcode?.hardSolved}
+                  </p>
+                </div>
+                <div className="w-full h-4 mt-1 rounded-2xl bg-gray-300">
+                  <div
+                    className="h-4 rounded-2xl bg-green-500 transition-all duration-500"
+                    style={{ width: `${progressPercentage}%` }}
+                  ></div>
+                </div>
               </div>
             </div>
           </div>
 
           {/* GitHub Card */}
-          <div className="bg-white shadow rounded-lg p-4">
+          <div className="bg-green-100 shadow rounded-lg p-4">
             <p className="text-gray-500">GitHub Overview</p>
             <div className="flex items-center gap-3 mt-2">
               <img
@@ -77,14 +97,14 @@ function Dashboard() {
                 <h2 className="text-lg font-bold">
                   {allPlatformStats?.github?.name}
                 </h2>
-                <a
-                  href={allPlatformStats?.github?.profileUrl}
+                <Link
+                  to={allPlatformStats?.github?.profileUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-500 text-sm"
                 >
                   View Profile
-                </a>
+                </Link>
               </div>
             </div>
             <div className="mt-3 text-sm text-gray-600">
@@ -101,7 +121,8 @@ function Dashboard() {
           </div>
 
           {/* Codeforces Card */}
-          <div className="bg-white shadow rounded-lg p-4">
+
+          <div className="bg-pink-100 shadow rounded-lg p-4">
             <p className="text-gray-500">Codeforces Rating</p>
             {allPlatformStats?.codeforces ? (
               <>
